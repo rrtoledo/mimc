@@ -115,11 +115,25 @@ class MiMC7:
             print("h:", h)
         return m0, m1, iv, h
 
-    def generate_imbricated_hash(self, verbose = 1):
+    def generate_left_imbricated_hash(self, verbose = 1):
         m0, m1, iv, h = self.generate_random_hash(verbose)
         m2 = randint(0, self.prime-1)
         iv2 = randint(0, self.prime-1)
         h2 = self.hash([h, m2], iv2)
+        if verbose < 5:
+            print("\n-------------------- Generate imbricated hash")
+            print("h' = mimc_hash([h, m2], iv2)")
+            print("h:", h)
+            print("m2:", m2)
+            print("iv2:", iv2)
+            print("h:", h2)
+        return h2
+
+    def generate_right_imbricated_hash(self, verbose = 1):
+        m0, m1, iv, h = self.generate_random_hash(verbose)
+        m2 = randint(0, self.prime-1)
+        iv2 = randint(0, self.prime-1)
+        h2 = self.hash([m2, h], iv2)
         if verbose < 5:
             print("\n-------------------- Generate imbricated hash")
             print("h' = mimc_hash([h, m2], iv2)")
